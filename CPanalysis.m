@@ -26,8 +26,10 @@ CI(:,2)=[];
 
 CP_CI = 1- exp(CI);
 
-% disp('Fit results: ')
-% CP
+disp('Fit results: ')
+CP
+sum(A)
+Rsquared
 % CP_CI
 
 plot(linefit, X, Y2)
