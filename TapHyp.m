@@ -38,17 +38,17 @@ for i = 1 : ngenos
         diffvec = zeros(nitr, 1);
         
         parfor itr = 1 : nitr
-            ind_1  = randi(pooled_n,[A(i,1),i]);
-            ind_2  = randi(pooled_n,[A(j,1),i]);
+            ind_1  = randi(pooled_n,[A(i,1),1]);
+            ind_2  = randi(pooled_n,[A(j,1),1]);
 
             data_1 = -log(1 - mean(pooleddata(ind_1,:)));
             data_2 = -log(1 - mean(pooleddata(ind_2,:)));
             
-            pts2use = sum(data_1 ~= 1);
-            CP1 = 1 - exp(-taps(1:pts2use)' \ data_1(1 : pts2use)');
+            pts2use = ~isinf(data_1);
+            CP1 = 1 - exp(-taps(pts2use)' \ data_1(pts2use)');
             
-            pts2use = sum(data_2 ~= 1);
-            CP2 = 1 - exp(-taps(1:pts2use)' \ data_2(1 : pts2use)');
+            pts2use = ~isinf(data_2);
+            CP2 = 1 - exp(-taps(pts2use)' \ data_2(pts2use)');
             
             diffvec(itr) = CP1 - CP2;
         end

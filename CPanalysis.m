@@ -29,10 +29,10 @@ CP_CI = 1- exp(CI);
 disp('Fit results: ')
 CP
 sum(A)
-Rsquared
+
 % CP_CI
 
 plot(linefit, X, Y2)
 
 Ycalc = X * linefit.p1;
-Rsquared = 1 - sum((Y2 - Ycalc).^2)/sum((Y2 - mean(Y2)).^2);
+Rsquared = 1 - sum((Y2 - Ycalc).^2)/sum((Y2 - mean(Y2)).^2)
