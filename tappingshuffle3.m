@@ -1,5 +1,5 @@
-n = 29;
-ntotal = 29;
+n = 55;
+ntotal = 55;
 n_entries = 455127; %0-55
 % n_entries = 316252; %0-50
 CCPmat = zeros(n_entries,4);
@@ -38,7 +38,7 @@ Rsq_vec = Rsq_vec(1:counter);
 
 close(hwait)
 %%
-threshold = 0.943905595
+threshold = 0.995
 
 
 
