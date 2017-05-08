@@ -3,7 +3,7 @@
 C = [47, 12.2];
 
 % Experimental R_sqaured
-R2_emp = 0.998;
+R2_emp = 0.996;
 
 %%
 % Number of iterations
