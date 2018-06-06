@@ -53,7 +53,7 @@ for i1 = 0 : n % First tap
 end
 
 % Run time
-t_run = toc
+toc
 
 % Close progress bar
 close(hwait)

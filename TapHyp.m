@@ -15,7 +15,7 @@ function P_mat = TapHyp(input_matrix)
 % P_mat = TapHyp(input_matrix)
 
 % The number of genotypes
-ngenos = size(A,1);
+ngenos = size(input_matrix,1);
 
 % Caculate the number of comparisons
 ncomps = sum(1:(ngenos-1));
@@ -54,7 +54,7 @@ nitr = 100000;
 tic
 
 % Initiate the waitbar
-hbar = waitbar(0);
+hbar = waitbar(0, 'Bootstrapping');
 for i = 1 : ngenos
     for j =  (i+1) : ngenos
         % Update the waitbar
@@ -65,14 +65,14 @@ for i = 1 : ngenos
         P_mat(counter, 2) = j;
         
         % Pool the initiation data together, so they can be boostrapped
-        pooled_n = A(i,1) + A(j,1);
+        pooled_n = input_matrix(i,1) + input_matrix(j,1);
         
         % Generate a pooled, binary initiation matrix
         pooleddata = zeros(pooled_n, 4);
-        pooleddata( 1 : (A(i,2) + A(j,2)), 1) = 1;
-        pooleddata( 1 : (A(i,3) + A(j,3)), 2) = 1;
-        pooleddata( 1 : (A(i,4) + A(j,4)), 3) = 1;
-        pooleddata( 1 : (A(i,5) + A(j,5)), 4) = 1;
+        pooleddata( 1 : (input_matrix(i,2) + input_matrix(j,2)), 1) = 1;
+        pooleddata( 1 : (input_matrix(i,3) + input_matrix(j,3)), 2) = 1;
+        pooleddata( 1 : (input_matrix(i,4) + input_matrix(j,4)), 3) = 1;
+        pooleddata( 1 : (input_matrix(i,5) + input_matrix(j,5)), 4) = 1;
         
         % Initiate a vector to store the difference in courtship
         % probabilities
@@ -80,8 +80,8 @@ for i = 1 : ngenos
         
         for itr = 1 : nitr % Can use parfor here
             % Resample two datasets (bootstrap)
-            ind_1  = randi(pooled_n,[A(i,1),1]);
-            ind_2  = randi(pooled_n,[A(j,1),1]);
+            ind_1  = randi(pooled_n,[input_matrix(i,1),1]);
+            ind_2  = randi(pooled_n,[input_matrix(j,1),1]);
             
             % Linearize the bootstrapped datasets
             data_1 = -log(1 - mean(pooleddata(ind_1,:)));

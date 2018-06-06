@@ -6,7 +6,7 @@ function CI_mat = TapCI(input_matrix)
 % be simulated. The first column is the total number of flies, while the 
 % next 4 are the cumulative number of courtship initiations after 1-4 taps. 
 %
-% The output matrix has three column: actual_CI, upper_bound, lower bound.
+% The output matrix has three column: actual_CI, lower_bound, upper_bound.
 %
 % CI_mat = TapCI(input_matrix)
 
@@ -46,6 +46,7 @@ nitr = 100000;
 
 tic
 
+
 % Initiate waitbar
 hbar = waitbar(0,'Processing');
 
@@ -54,19 +55,19 @@ for i = 1 : ngenos
     waitbar(i/ngenos)
     
     % Reconstruct binary courtship initiation matrix for this genotype
-    flies_n = A(i,1);
+    flies_n = input_matrix(i,1);
     initiation_mat = zeros(flies_n, 4);
-    initiation_mat( 1 : (A(i,2)), 1) = 1;
-    initiation_mat( 1 : (A(i,3)), 2) = 1;
-    initiation_mat( 1 : (A(i,4)), 3) = 1;
-    initiation_mat( 1 : (A(i,5)), 4) = 1;
+    initiation_mat( 1 : (input_matrix(i,2)), 1) = 1;
+    initiation_mat( 1 : (input_matrix(i,3)), 2) = 1;
+    initiation_mat( 1 : (input_matrix(i,4)), 3) = 1;
+    initiation_mat( 1 : (input_matrix(i,5)), 4) = 1;
     
     % Initiate a vector for courtship probabilities
     CPvec = zeros(nitr, 1);
 
     for itr = 1 : nitr % Can use parfor here if needed
         % Resample data and liearize (bootstrap)
-        ind_1  = randi(flies_n,[A(i,1),1]);
+        ind_1  = randi(flies_n,[input_matrix(i,1),1]);
         data_1 = -log(1 - mean(initiation_mat(ind_1,:)));
         
         % Find non-infinite points (if any) and remove them from the fit
