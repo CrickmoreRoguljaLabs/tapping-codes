@@ -1,11 +1,12 @@
-%% Input (temporary)
+%% Input
 % N and probability
-C = [47, 12.2];
+C = [55, 44.2; 47, 12; 57, 6.5];
 
 % Experimental R_sqaured
-R2_emp = 0.996;
+R2_emp = [0.995, 0.9960, 0.900];
 
-%%
+%% Simulation
+% This code uses data from 4 flips for each iteration
 % Number of iterations
 nitr = 100000;
 
@@ -15,8 +16,6 @@ CP_mat = zeros(nitr, 1);
 
 % Iniaite a vector to store trials with infinite values
 infvec = zeros(nitr,1);
-
-tic
 
 for i = 1 : nitr
 
@@ -39,18 +38,8 @@ for i = 1 : nitr
     R2_mat(i) = 1 - sum((B_f - Bcalc).^2)/sum((B_f - mean(B_f)).^2);
     CP_mat(i) = 1 - exp(-slope);
 
-    % Flag if infinite
-    if A(4) == C(1)
-        infvec(i) = 1;
-    end
 end
-
-toc
 
 
 % Calcualte pvalue given the coin flip model
 pvalue = sum(R2_mat >= R2_emp)/nitr
-
-% Say how many trials have infinite values
-sum(infvec)
-
